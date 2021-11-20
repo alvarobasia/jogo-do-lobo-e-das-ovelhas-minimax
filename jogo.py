@@ -1,3 +1,15 @@
-from utils.print_board import print_board
-from utils.print_indicators import print_indicators
-print_board(indicators_position=print_indicators([6, 4]))
+from domain.Game import Game
+
+board = [
+    [0, 'S', 0, 'S', 0, 'S', 0, 'S'],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 'W', 0, 0, 0],
+]
+
+
+game = Game(board)

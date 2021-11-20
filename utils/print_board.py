@@ -1,4 +1,4 @@
-def print_board(sheeps_positions=[[0, 1], [0, 3], [0, 5], [0, 7]], wolf_position=[6, 4], indicators_position=[None]):
+def print_board(sheeps_positions=[[0, 1], [0, 3], [0, 5], [0, 7]], wolf_position=[7, 4]):
     print("   0   1   2   3   4   5   6   7  ")
     print(" |===|===|===|===|===|===|===|===|")
     for i in range(0, 8):
@@ -14,12 +14,7 @@ def print_board(sheeps_positions=[[0, 1], [0, 3], [0, 5], [0, 7]], wolf_position
                     print("🐑 ", end="")
                     has_sheep = True
             has_indicator = False
-            for index, indicator in enumerate(indicators_position):
-                if indicator != None and i == indicator[0] and j == indicator[1]:
-                    print(f" {index} ", end="")
-                    has_indicator = True
-
-            if not has_sheep and not has_indicator:
+            if not has_sheep:
                 print("   ", end="")
         print("|")
         print(" |===|===|===|===|===|===|===|===|")
