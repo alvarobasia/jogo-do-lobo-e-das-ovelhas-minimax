@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Tuple
 
 
 class Sheep:
@@ -25,13 +25,26 @@ class Sheep:
         if self.position[1] == 7:
             block_positions[1] = True
 
-        if not block_positions[0] and board[self.position[0] + 1][self.position[1] - 1] == 0:
-            print('valid 1')
+        if self.position[0] + 1 > 7:
+            pos_x = 7
+        else:
+            pos_x = self.position[0] + 1
+
+        if self.position[1] + 1 > 7:
+            pos_y = 7
+        else:
+            pos_y = self.position[1] + 1
+
+        if self.position[1] - 1 < 0:
+            pos_y_m = 0
+        else:
+            pos_y_m = self.position[1] - 1
+
+        if not block_positions[0] and board[pos_x][pos_y_m] == 0:
             valid_moves.append(
-                [self.position[0] + 1,  self.position[1] - 1])
-        if not block_positions[1] and board[self.position[0] + 1][self.position[1] + 1] == 0:
-            print('valid 2')
+                [pos_x,  pos_y_m])
+        if not block_positions[1] and board[pos_x][pos_y] == 0:
             valid_moves.append(
-                [self.position[0] + 1,  self.position[1] + 1])
+                [pos_x,  pos_y])
 
         return valid_moves

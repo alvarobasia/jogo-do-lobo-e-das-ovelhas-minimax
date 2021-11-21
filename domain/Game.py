@@ -1,7 +1,8 @@
 from typing import List
-from domain.Minimax import minimax
+from domain.minimax import minimax
 from domain.Player import Player
-
+import platform
+from os import system
 from domain.Sheep import Sheep
 from domain.Turn import Turn
 from domain.Wolf import Wolf
@@ -31,6 +32,8 @@ class Game:
 
     def play(self):
         while self.winner is None:
+            self.clear_console()
+
             print_board([x.position for x in self.sheeps],
                         self.wolf.position)
             if self.turn == Turn.PLAYER and self.winner is None:
@@ -38,13 +41,26 @@ class Game:
                 self.turn = Turn.COMPUTER
                 if self.is_player_winner():
                     self.winner = Turn.PLAYER
+                    self.clear_console()
+                    print_board([x.position for x in self.sheeps],
+                                self.wolf.position)
                     print("Você venceu!")
             if self.turn == Turn.COMPUTER and self.winner is None:
                 self.comp_turn()
                 self.turn = Turn.PLAYER
                 if self.is_sheep_winner():
                     self.winner = Turn.COMPUTER
+                    self.clear_console()
+                    print_board([x.position for x in self.sheeps],
+                                self.wolf.position)
                     print("O computador venceu!")
+
+    def clear_console(self):
+        os_name = platform.system().lower()
+        if 'windows' in os_name:
+            system('cls')
+        else:
+            system('clear')
 
     def player_turn(self):
         valid_movement = False
@@ -64,7 +80,9 @@ class Game:
         value = minimax(self.board, 4, Player.SHEEP)
         print(value)
         choose_sheep = self.get_best_sheep_to_movement(value[0], value[1])
-        print(f"{choose_sheep}")
+        if not choose_sheep:
+            print("Não há nenhuma ovelha para se movimentar!")
+            return
         for sheep in self.sheeps:
             if sheep.position[0] == choose_sheep.position[0] and sheep.position[1] == choose_sheep.position[1]:
                 self.board = sheep.move_piece([value[0], value[1]], self.board)
@@ -93,3 +111,4 @@ class Game:
             print(valid_moves)
             if [position_row, position_column] in valid_moves:
                 return sheep
+        return False
