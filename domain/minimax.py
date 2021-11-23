@@ -2,14 +2,14 @@ from typing import List, Tuple
 from domain.Player import Player
 
 
-def minimax(board: List[List[int]], proof, player: Player):
+def minimax(board: List[List[int]], deep, player: Player):
     if player == Player.SHEEP:
         best = [-1, -1, -float("inf")]
     else:
         best = [-1, -1, float("inf")]
 
     # valor-minimax(estado) = avaliacao(estado)
-    if proof == 0 or end_game(board):
+    if deep == 0 or end_game(board):
         value = evaluation(board)
         return [best[0], best[1], value]
 
@@ -18,7 +18,7 @@ def minimax(board: List[List[int]], proof, player: Player):
             position_row = cell[0]
             position_column = cell[1]
             board[position_row][position_column] = 'S'
-            value = minimax(board, proof - 1, Player.WOLF)
+            value = minimax(board, deep - 1, Player.WOLF)
             board[position_row][position_column] = 0
             value[0], value[1] = position_row, position_column
 
@@ -34,7 +34,7 @@ def minimax(board: List[List[int]], proof, player: Player):
             position_row = cell[0]
             position_column = cell[1]
             board[position_row][position_column] = 'W'
-            value = minimax(board, proof - 1, Player.SHEEP)
+            value = minimax(board, deep - 1, Player.SHEEP)
             board[position_row][position_column] = 0
             value[0], value[1] = position_row, position_column
 
